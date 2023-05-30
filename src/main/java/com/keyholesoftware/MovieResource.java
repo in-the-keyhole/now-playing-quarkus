@@ -15,6 +15,7 @@ import com.keyholesoftware.rest.client.TMDBService;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.quarkus.cache.CacheResult;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.ws.rs.GET;
@@ -39,6 +40,7 @@ public class MovieResource {
 
     @GET
     @Path("/nowPlaying")
+    @RolesAllowed("user")
     public List<Movie> nowPlaying() {
         registry.counter("list.movies").increment();
         List<Movie> movies = em.createQuery("from Movie", Movie.class).getResultList();
@@ -51,6 +53,7 @@ public class MovieResource {
 
     @GET
     @Path("/nowPlaying2")
+    @RolesAllowed("user")
     @Fallback(fallbackMethod = "nowPlayingFallback")
     @CacheResult(cacheName = "nowPlayingCache")
     public Set<com.keyholesoftware.rest.client.Movie> nowPlaying2() {
