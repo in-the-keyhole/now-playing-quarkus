@@ -1,0 +1,5 @@
+ - job_name: 'quarkus-micrometer'
+   metrics_path: '/q/metrics'
+   scrape_interval: 3s
+   static_configs:
+     - targets: ['host.docker.internal:8080']
