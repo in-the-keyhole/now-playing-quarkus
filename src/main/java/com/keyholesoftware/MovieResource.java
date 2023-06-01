@@ -59,7 +59,7 @@ public class MovieResource {
     public Set<com.keyholesoftware.rest.client.Movie> nowPlaying2() {
 
         // maybeFail("MovieResource#nowPlaying2() invocation failed");
-
+        registry.counter("nowPlaying.counter").increment();
         LOGGER.info("MovieResource#nowPlaying2() returning successfully");
 
         NowPlaying nowPlaying = tmdbService.nowPlaying();
