@@ -24,10 +24,10 @@ public class MovieResource {
     @Inject
     EntityManager em;
 
-    private final MeterRegistry registry;
+    private final MeterRegistry meterRegistry;
 
-    MovieResource(MeterRegistry registry) {
-        this.registry = registry;
+    MovieResource(MeterRegistry meterRegistry) {
+        this.meterRegistry = meterRegistry;
     }
 
     @GET
@@ -36,7 +36,7 @@ public class MovieResource {
     @Fallback(fallbackMethod = "nowPlayingFallback")
     @CacheResult(cacheName = "nowPlayingCache")
     public List<Movie> nowPlaying() {
-        registry.counter("nowPlaying.invocations").increment();
+        meterRegistry.counter("nowPlaying.invocations").increment();
         List<Movie> movies = em.createQuery("from Movie", Movie.class).getResultList();
         LOGGER.debug("MovieResource>>nowPlaying - fetched movies");
         return movies;
