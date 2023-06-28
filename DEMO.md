@@ -118,6 +118,10 @@
     ```
     ./mvnw clean package -DskipTests
     ```
+    or
+    ```
+    quarkus build --no-tests
+    ```
 
 
 - [ ] Show produced package layers in target/quarkus-app dir  (discuss docker filesystem layers)
@@ -133,7 +137,7 @@
 - [ ] Start k8s cluster & k9s
 
    ```
-   k3d cluster start quarkus
+   k3d cluster start quarkus-demo
    ```
 
     ```
