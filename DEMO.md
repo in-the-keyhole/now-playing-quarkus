@@ -88,7 +88,7 @@
 - [ ] Open VS Code on `now-playing-quarkus`
     - [ ] Talk about the app features and extensions used
         - [ ] It's a ReST API for movie data
-        - [ ] Postgresql / Hibernate / Flyway
+        - [ ] Postgresql / JPA / Flyway
         - [ ] MicroProfile
             - [ ] OpenAPI
             - [ ] Health
