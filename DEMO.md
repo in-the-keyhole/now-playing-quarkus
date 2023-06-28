@@ -55,7 +55,8 @@
 ---
 - [ ] Add OIDC extension / Copy mvn cmd from starter for quarkus-oidc
     ```
-    ./mvnw quarkus:add-extension -Dextensions="io.quarkus:quarkus-oidc"
+    ./mvnw quarkus:add-extension \
+        -Dextensions="io.quarkus:quarkus-oidc"
     ```
     or
     ```
@@ -170,7 +171,10 @@
 
 - [ ] Build native image
     ```
-    ./mvnw clean package -DskipTests -Pnative -Dquarkus.native.container-build=true
+    ./mvnw clean package \
+        -Pnative \
+        -DskipTests \
+        -Dquarkus.native.container-build=true
     ```
     - [ ] Discuss build time & pre-built image
 
@@ -178,7 +182,9 @@
 
 - [ ] Deploy to k8s
     ```
-    ./mvnw clean package -DskipTests -Dquarkus.kubernetes.deploy=true
+    ./mvnw clean package \
+        -DskipTests \
+        -Dquarkus.kubernetes.deploy=true
     ```
 
 ###### CALL API in app deployed to k8s 
