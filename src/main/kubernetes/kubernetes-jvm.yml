@@ -1,0 +1,124 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/scheme: http
+    prometheus.io/port: "8080"
+    prometheus.io/path: /q/metrics
+    prometheus.io/scrape: "true"
+    app.quarkus.io/build-timestamp: 2023-06-24 - 01:03:20 +0000
+    app.quarkus.io/commit-id: 348c7bd01f78e4da9a94a41d212b222dccb730d9
+  labels:
+    app.kubernetes.io/name: now-playing-quarkus-jvm
+    app.kubernetes.io/version: 1.0.0-SNAPSHOT
+    app.kubernetes.io/managed-by: quarkus
+  name: now-playing-quarkus-jvm
+  namespace: quarkus-demo
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8443
+  selector:
+    app.kubernetes.io/name: now-playing-quarkus-jvm
+    app.kubernetes.io/version: 1.0.0-SNAPSHOT
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    prometheus.io/scheme: http
+    prometheus.io/port: "8080"
+    prometheus.io/path: /q/metrics
+    prometheus.io/scrape: "true"
+    app.quarkus.io/build-timestamp: 2023-06-24 - 01:03:20 +0000
+    app.quarkus.io/commit-id: 348c7bd01f78e4da9a94a41d212b222dccb730d9
+  labels:
+    app.kubernetes.io/version: 1.0.0-SNAPSHOT
+    app.kubernetes.io/name: now-playing-quarkus-jvm
+    app.kubernetes.io/managed-by: quarkus
+  name: now-playing-quarkus-jvm
+  namespace: quarkus-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/version: 1.0.0-SNAPSHOT
+      app.kubernetes.io/name: now-playing-quarkus-jvm
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scheme: http
+        prometheus.io/port: "8080"
+        prometheus.io/path: /q/metrics
+        prometheus.io/scrape: "true"
+        app.quarkus.io/build-timestamp: 2023-06-24 - 01:03:20 +0000
+        app.quarkus.io/commit-id: 348c7bd01f78e4da9a94a41d212b222dccb730d9
+      labels:
+        app.kubernetes.io/version: 1.0.0-SNAPSHOT
+        app.kubernetes.io/name: now-playing-quarkus-jvm
+        app.kubernetes.io/managed-by: quarkus
+    spec:
+      containers:
+        - env:
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: redis-password
+                  name: redis
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: postgres-password
+                  name: postgresql
+          image: keyholesoftware/now-playing-quarkus:1.0.0-SNAPSHOT-jvm
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /q/health/live
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: now-playing-quarkus-jvm
+          ports:
+            - containerPort: 8443
+              name: https
+              protocol: TCP
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /q/health/ready
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          startupProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /q/health/started
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
