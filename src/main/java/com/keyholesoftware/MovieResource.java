@@ -38,7 +38,7 @@ public class MovieResource {
     public List<Movie> nowPlaying() {
         meterRegistry.counter("nowPlaying.invocations").increment();
         List<Movie> movies = em.createQuery("from Movie", Movie.class).getResultList();
-        LOGGER.debug("MovieResource>>nowPlaying - fetched movies");
+        LOGGER.info("MovieResource>>nowPlaying - fetched movies");
         return movies;
     }
 
