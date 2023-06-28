@@ -157,7 +157,11 @@
 
 - [ ] Run JVM Mode in Docker (created during package)
     ```
-    docker run -i --rm -p 8080:8080 -equarkus.datasource.jdbc.url=jdbc:postgresql://host.docker.internal:5432/now-playing -equarkus.oidc.auth-server-url=http://host.docker.internal:8180/realms/quarkus-demo -equarkus.redis.hosts=redis://:TCtNvljreU@host.docker.internal/ keyholesoftware/now-playing-quarkus:1.0.0-SNAPSHOT
+    docker run -i --rm -p 8080:8080 \
+        -equarkus.datasource.jdbc.url=jdbc:postgresql://host.docker.internal:5432/now-playing \
+        -equarkus.oidc.auth-server-url=http://host.docker.internal:8180/realms/quarkus-demo \
+        -equarkus.redis.hosts=redis://:thisshouldbesecret@host.docker.internal/ \
+        -equarkus.profile=local keyholesoftware/now-playing-quarkus:1.0.0-SNAPSHOT
     ```
     - [ ] Point out startup time
 
