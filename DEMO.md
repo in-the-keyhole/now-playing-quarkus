@@ -89,13 +89,14 @@
     - [ ] Talk about the app features and extensions used
         - [ ] It's a ReST API for movie data
         - [ ] Postgresql / JPA / Flyway
+        - [ ] Redis cache
         - [ ] MicroProfile
             - [ ] OpenAPI
             - [ ] Health
             - [ ] Metrics
             - [ ] Fault Tolerance
-            - [ ] JWT Auth
-        - [ ] Redis cache
+            - [ ] OIDC
+      
     - [ ] Run in dev mode
         ```
         ./mvnw quarkus:dev
