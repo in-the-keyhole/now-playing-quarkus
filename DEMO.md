@@ -106,7 +106,7 @@
     - [ ] Demo running app in Postman
     
 ---
-### Packaging
+### Packaging & Run Modes
 ---
 - [ ] Stop dev mode [q]
 
