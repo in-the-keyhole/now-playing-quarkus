@@ -192,7 +192,15 @@
     ```
 
     - [ ] Run native docker image locally
-
+      ```
+      docker run -i --rm -p 8080:8080 \
+        -equarkus.datasource.jdbc.url=jdbc:postgresql://host.docker.internal:5432/now-playing \
+        -equarkus.oidc.auth-server-url=http://host.docker.internal:8180/realms/quarkus-demo \
+        -equarkus.redis.hosts=redis://:thisshouldbesecret@host.docker.internal/ \
+        -equarkus.profile=local \
+        keyholesoftware/now-playing-quarkus:1.0.0-SNAPSHOT
+      ```
+      
 ##### Kubernetes
 
 - [ ] Deploy to k8s
