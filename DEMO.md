@@ -12,10 +12,7 @@
 
     ```
     quarkus create app \
-        --extensions=resteasy,\
-            resteasy-jackson,\
-            smallrye-openapi,\
-            smallrye-health \
+        --extensions=resteasy,resteasy-jackson,smallrye-openapi,smallrye-health \
         --package-name=com.keyholesoftware \
         com.keyholesoftware:quarkus-jug
     ```
