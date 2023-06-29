@@ -169,7 +169,7 @@
 
 > #### Native Mode
 
-- [ ] Build native image
+- [ ] Build native image - start it locally, but it will take a long time (~7-10 mins)
     ```
     ./mvnw clean package \
         -Pnative \
@@ -177,6 +177,21 @@
         -Dquarkus.native.container-build=true
     ```
     - [ ] Discuss build time & pre-built image
+
+- [ ] Run OSX native runner from demo
+    ```
+    ./demo/now-playing-quarkus-1.0.0-SNAPSHOT-runner -Dquarkus.profile=local
+    ```
+
+- [ ] Discuss pre-built native image 
+    ```
+    docker images
+    ```
+    ```
+    keyholesoftware/now-playing-springboot:1.0.0-SNAPSHOT-native
+    ```
+
+    - [ ] Run native docker image locally
 
 ##### Kubernetes
 
@@ -186,11 +201,29 @@
         -DskipTests \
         -Dquarkus.kubernetes.deploy=true
     ```
+    - [ ] Point out start up time
 
-###### CALL API in app deployed to k8s 
+- [ ] Deploy JVM Mode image to k8s
+    ```
+    kubectl apply -f src/main/kubernetes/kubernetes.yml
+    ```
+    - [ ] Point out start up time
 
-- [ ] Port forward the quarkus app service (8080)
-- [ ] Get JWT pbcopy
+- [ ] Deploy Spring  Boot image to k8s
+    ```
+    cd ../now-playing-quarkus
+    kubectl apply -f src/main/kubernetes/kubernetes.yml
+    ```
+    - [ ] Point out start up time
+
+
+- [ ] Show memory usage in Grafana
+
+
+###### To get JWT (access token)
+
+- [ ] Port forward the keycloak svc (8180)
+- [ ] Get JWT on clipboard
     ```
     curl --insecure -X POST http://localhost:8180/realms/quarkus-demo/protocol/openid-connect/token \
         --user now-playing:secret \
@@ -198,5 +231,3 @@
         -H 'host: keycloak' \
         -d 'username=bob&password=bob&grant_type=password' | jq --raw-output '.access_token' | tr -d '\n' | pbcopy
     ```
-
-- [ ] Hit with Postman
