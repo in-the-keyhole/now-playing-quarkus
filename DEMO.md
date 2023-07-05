@@ -213,7 +213,7 @@
 
 - [ ] Deploy JVM Mode image to k8s
     ```
-    kubectl apply -f src/main/kubernetes/kubernetes.yml
+    kubectl apply -f src/main/kubernetes/kubernetes-jvm.yml
     ```
     - [ ] Point out start up time
 
