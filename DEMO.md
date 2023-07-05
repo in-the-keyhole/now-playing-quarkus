@@ -219,7 +219,7 @@
 
 - [ ] Deploy Spring  Boot image to k8s
     ```
-    cd ../now-playing-quarkus
+    cd ../now-playing-springboot
     kubectl apply -f src/main/kubernetes/kubernetes.yml
     ```
     - [ ] Point out start up time
