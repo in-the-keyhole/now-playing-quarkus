@@ -42,3 +42,4 @@ nb-configuration.xml
 # Plugin directory
 /.quarkus/cli/plugins/
 demo
+temp.txt
