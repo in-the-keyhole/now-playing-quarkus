@@ -5,7 +5,8 @@ import java.util.List;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.jboss.logging.Logger;
 
-import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 import io.quarkus.cache.CacheResult;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
@@ -24,19 +25,14 @@ public class MovieResource {
     @Inject
     EntityManager em;
 
-    private final MeterRegistry meterRegistry;
-
-    MovieResource(MeterRegistry meterRegistry) {
-        this.meterRegistry = meterRegistry;
-    }
-
     @GET
     @Path("/nowPlaying")
     @RolesAllowed("user")
+    @Timed(value = "nowPlaying.timer", histogram = true)
+    @Counted("nowPlaying.counter")
     @Fallback(fallbackMethod = "nowPlayingFallback")
     @CacheResult(cacheName = "nowPlayingCache")
     public List<Movie> nowPlaying() {
-        meterRegistry.counter("nowPlaying.invocations").increment();
         List<Movie> movies = em.createQuery("from Movie", Movie.class).getResultList();
         LOGGER.info("MovieResource>>nowPlaying - fetched movies");
         return movies;

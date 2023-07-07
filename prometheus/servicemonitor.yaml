@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: quarkus-app-monitor
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  namespaceSelector:
+    matchNames:
+      - quarkus-demo
+  selector:
+    matchLabels:
+      app.kubernetes.io/part-of: quarkus-demo
+  endpoints:
+    - port: http
+      path: /q/metrics
+      interval: 10s
