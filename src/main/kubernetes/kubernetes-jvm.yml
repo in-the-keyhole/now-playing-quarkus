@@ -84,7 +84,7 @@ spec:
                   key: postgres-password
                   name: postgresql
           image: keyholesoftware/now-playing-quarkus:1.0.0-SNAPSHOT-jvm
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3
             httpGet:
